@@ -1,0 +1,41 @@
+import { useState, useEffect } from "react";
+
+import "./App.css";
+
+// Components
+import Card from "./components/Card";
+import Counter from "./components/Counter";
+
+import axios from "axios";
+
+function App() {
+  const [details, setDetails] = useState({});
+
+  const fetchDetails = async () => {
+    const { data } = await axios.get(`https://randomuser.me/api/`);
+    console.log(data);
+    const details = data.results[0];
+    setDetails(details);
+    console.log(details);
+  };
+
+  useEffect(() => {
+    fetchDetails();
+  }, []);
+
+  return (
+    <div className="App">
+      <Counter />
+
+      <Card details={details} />
+
+      {/* <Card
+        name="sara"
+        imgUrl="https://images.pexels.com/photos/2522672/pexels-photo-2522672.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+      /> */}
+      {/* <Card imgUrl="https://images.pexels.com/photos/3532552/pexels-photo-3532552.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" /> */}
+    </div>
+  );
+}
+
+export default App;
